@@ -34,8 +34,8 @@ function App() {
     setError(null)
     try {
       const [summaryRes, recordsRes] = await Promise.all([
-        fetch('http://localhost:8000/summary'),
-        fetch('http://localhost:8000/records')
+        fetch('http://localhost:8080/summary'),
+        fetch('http://localhost:8080/records')
       ])
 
       if (!summaryRes.ok || !recordsRes.ok) {

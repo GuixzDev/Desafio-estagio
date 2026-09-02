@@ -21,6 +21,7 @@ services:
       DATABASE_URL: postgresql://postgres:postgrespassword@db:5432/desafio_db
     ports:
       - "8000:8000"
+      - "8080:8000"
     depends_on:
       - db
 

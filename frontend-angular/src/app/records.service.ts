@@ -30,7 +30,7 @@ export interface RecordResponse {
   providedIn: 'root'
 })
 export class RecordsService {
-  private apiUrl = 'http://localhost:8000';
+  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 

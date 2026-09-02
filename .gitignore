@@ -1,0 +1,6 @@
+node_modules/
+dist/
+local-api-server.js
+.env
+__pycache__/
+*.pyc
