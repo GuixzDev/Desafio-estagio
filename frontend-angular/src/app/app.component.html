@@ -1,70 +1,48 @@
 <div class="container">
-  <div class="card">
-    <header class="card-header">
-      <h1>Cadastro de Entregas</h1>
-      <p>Lance as entregas diárias dos funcionários por período</p>
-    </header>
+  <div class="box">
+    <h2>Cadastro de Entregas</h2>
 
-    <div *ngIf="feedbackMessage" [ngClass]="{'alert-success': feedbackType === 'success', 'alert-error': feedbackType === 'error'}" class="alert">
-      <span>{{ feedbackMessage }}</span>
+    <div *ngIf="feedbackMessage" [ngClass]="feedbackType" class="message">
+      {{ feedbackMessage }}
     </div>
 
-    <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" class="form-body">
-      <div class="form-group">
+    <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+      <div class="field">
         <label for="funcionario_id">Funcionário *</label>
-        <select id="funcionario_id" formControlName="funcionario_id" [class.input-error]="recordForm.get('funcionario_id')?.invalid && recordForm.get('funcionario_id')?.touched">
-          <option value="" disabled>Selecione um funcionário...</option>
+        <select id="funcionario_id" formControlName="funcionario_id">
+          <option value="" disabled>Selecione um funcionário</option>
           <option *ngFor="let emp of employees" [value]="emp.id">
-            {{ emp.nome }} — {{ emp.departamento }}
+            {{ emp.nome }} ({{ emp.departamento }})
           </option>
         </select>
-        <div *ngIf="recordForm.get('funcionario_id')?.invalid && recordForm.get('funcionario_id')?.touched" class="error-text">
-          Selecione o funcionário responsável.
-        </div>
+        <span *ngIf="recordForm.get('funcionario_id')?.invalid && recordForm.get('funcionario_id')?.touched" class="error">
+          Campo obrigatório
+        </span>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="data_referencia">Data de Referência *</label>
-          <input
-            type="date"
-            id="data_referencia"
-            formControlName="data_referencia"
-            [class.input-error]="recordForm.get('data_referencia')?.invalid && recordForm.get('data_referencia')?.touched"
-          />
-          <div *ngIf="recordForm.get('data_referencia')?.invalid && recordForm.get('data_referencia')?.touched" class="error-text">
-            A data de referência é obrigatória.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="quantidade_entregas">Quantidade de Entregas *</label>
-          <input
-            type="number"
-            id="quantidade_entregas"
-            formControlName="quantidade_entregas"
-            min="0"
-            [class.input-error]="recordForm.get('quantidade_entregas')?.invalid && recordForm.get('quantidade_entregas')?.touched"
-          />
-          <div *ngIf="recordForm.get('quantidade_entregas')?.invalid && recordForm.get('quantidade_entregas')?.touched" class="error-text">
-            Informe um número válido maior ou igual a zero.
-          </div>
-        </div>
+      <div class="field">
+        <label for="data_referencia">Data de Referência *</label>
+        <input type="date" id="data_referencia" formControlName="data_referencia" />
+        <span *ngIf="recordForm.get('data_referencia')?.invalid && recordForm.get('data_referencia')?.touched" class="error">
+          Campo obrigatório
+        </span>
       </div>
 
-      <div class="form-group">
-        <label for="observacao">Observações (Opcional)</label>
-        <textarea
-          id="observacao"
-          formControlName="observacao"
-          rows="3"
-          placeholder="Ex: Turno da manhã, entregas urgentes, etc."
-        ></textarea>
+      <div class="field">
+        <label for="quantidade_entregas">Quantidade de Entregas *</label>
+        <input type="number" id="quantidade_entregas" min="0" formControlName="quantidade_entregas" />
+        <span *ngIf="recordForm.get('quantidade_entregas')?.invalid && recordForm.get('quantidade_entregas')?.touched" class="error">
+          Informe um valor maior ou igual a zero
+        </span>
       </div>
 
-      <button type="submit" [disabled]="isSubmitting" class="btn-submit">
-        <span *ngIf="!isSubmitting">Salvar Registro</span>
-        <span *ngIf="isSubmitting">Salvando...</span>
+      <div class="field">
+        <label for="observacao">Observação</label>
+        <textarea id="observacao" formControlName="observacao" rows="3"></textarea>
+      </div>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Salvando...' : 'Salvar Registro' }}
       </button>
     </form>
   </div>
