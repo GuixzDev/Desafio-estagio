@@ -13,6 +13,16 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
+  backend:
+    build: ./backend
+    container_name: desafio_backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:postgrespassword@db:5432/desafio_db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
 volumes:
   postgres_data:
-
