@@ -42,3 +42,4 @@ export class RecordsService {
     return this.http.post<RecordResponse>(`${this.apiUrl}/records`, payload);
   }
 }
+
