@@ -44,7 +44,7 @@ function App() {
       setSummary(await summaryRes.json())
       setRecords(await recordsRes.json())
     } catch {
-      setError('Erro ao carregar dados do servidor.')
+      setError('Não foi possível conectar ao servidor. Verifique se o backend está ativo.')
     } finally {
       setIsLoading(false)
     }
@@ -64,25 +64,39 @@ function App() {
         <h1 className="text-xl font-bold">Painel de Indicadores</h1>
         <button
           onClick={fetchData}
-          className="px-3 py-1.5 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+          disabled={isLoading}
+          className="px-3 py-1.5 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          Atualizar
+          {isLoading ? 'Carregando...' : 'Atualizar'}
         </button>
       </div>
 
-      {isLoading && <p className="text-gray-500 py-8 text-center">Carregando dados...</p>}
+      {isLoading && (
+        <div className="text-center py-12 border rounded bg-gray-50">
+          <p className="text-gray-600 font-medium">Carregando indicadores...</p>
+        </div>
+      )}
 
       {error && !isLoading && (
         <div className="p-4 mb-6 bg-red-50 text-red-700 border border-red-200 rounded">
-          <p>{error}</p>
-          <button onClick={fetchData} className="mt-2 text-sm underline font-medium">
+          <p className="font-semibold">Erro de Conexão</p>
+          <p className="text-sm mt-1">{error}</p>
+          <button
+            onClick={fetchData}
+            className="mt-3 px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded hover:bg-red-700"
+          >
             Tentar novamente
           </button>
         </div>
       )}
 
       {!isLoading && !error && records.length === 0 && (
-        <p className="text-gray-500 py-8 text-center">Nenhum registro encontrado.</p>
+        <div className="text-center py-12 border border-dashed rounded bg-gray-50">
+          <p className="font-semibold text-gray-700">Nenhum registro encontrado</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Cadastre novas entregas pelo formulário para visualizar os dados aqui.
+          </p>
+        </div>
       )}
 
       {!isLoading && !error && summary && records.length > 0 && (

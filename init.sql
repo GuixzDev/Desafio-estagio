@@ -23,3 +23,10 @@ INSERT INTO funcionarios (nome, departamento) VALUES
     ('João Pedro Costa', 'Expedição'),
     ('Beatriz Lima', 'Logística')
 ON CONFLICT DO NOTHING;
+
+INSERT INTO registros (funcionario_id, data_referencia, quantidade_entregas, observacao) VALUES
+    (1, '2026-09-01', 18, 'Entregas do turno da manhã'),
+    (2, '2026-09-01', 25, 'Entregas da rota central'),
+    (3, '2026-08-31', 14, 'Entregas de grande porte'),
+    (1, '2026-08-31', 20, 'Entregas no período vespertino')
+ON CONFLICT DO NOTHING;
