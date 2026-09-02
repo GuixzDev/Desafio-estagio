@@ -33,5 +33,14 @@ services:
     depends_on:
       - backend
 
+  frontend-react:
+    build: ./frontend-react
+    container_name: desafio_frontend_react
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:
