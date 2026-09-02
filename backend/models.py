@@ -24,3 +24,4 @@ class Registro(Base):
     criado_em = Column(DateTime, default=datetime.utcnow)
 
     funcionario = relationship("Funcionario", back_populates="registros")
+

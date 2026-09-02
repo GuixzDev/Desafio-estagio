@@ -38,3 +38,4 @@ class SummaryResponse(BaseModel):
     total_entregas: int
     media_entregas: float
     por_departamento: List[DepartmentSummary]
+

@@ -24,5 +24,14 @@ services:
     depends_on:
       - db
 
+  frontend-angular:
+    build: ./frontend-angular
+    container_name: desafio_frontend_angular
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:

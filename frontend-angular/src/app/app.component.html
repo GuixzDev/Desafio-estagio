@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="card">
+    <header class="card-header">
+      <h1>Cadastro de Entregas</h1>
+      <p>Lance as entregas diárias dos funcionários por período</p>
+    </header>
+
+    <div *ngIf="feedbackMessage" [ngClass]="{'alert-success': feedbackType === 'success', 'alert-error': feedbackType === 'error'}" class="alert">
+      <span>{{ feedbackMessage }}</span>
+    </div>
+
+    <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" class="form-body">
+      <div class="form-group">
+        <label for="funcionario_id">Funcionário *</label>
+        <select id="funcionario_id" formControlName="funcionario_id" [class.input-error]="recordForm.get('funcionario_id')?.invalid && recordForm.get('funcionario_id')?.touched">
+          <option value="" disabled>Selecione um funcionário...</option>
+          <option *ngFor="let emp of employees" [value]="emp.id">
+            {{ emp.nome }} — {{ emp.departamento }}
+          </option>
+        </select>
+        <div *ngIf="recordForm.get('funcionario_id')?.invalid && recordForm.get('funcionario_id')?.touched" class="error-text">
+          Selecione o funcionário responsável.
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="data_referencia">Data de Referência *</label>
+          <input
+            type="date"
+            id="data_referencia"
+            formControlName="data_referencia"
+            [class.input-error]="recordForm.get('data_referencia')?.invalid && recordForm.get('data_referencia')?.touched"
+          />
+          <div *ngIf="recordForm.get('data_referencia')?.invalid && recordForm.get('data_referencia')?.touched" class="error-text">
+            A data de referência é obrigatória.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="quantidade_entregas">Quantidade de Entregas *</label>
+          <input
+            type="number"
+            id="quantidade_entregas"
+            formControlName="quantidade_entregas"
+            min="0"
+            [class.input-error]="recordForm.get('quantidade_entregas')?.invalid && recordForm.get('quantidade_entregas')?.touched"
+          />
+          <div *ngIf="recordForm.get('quantidade_entregas')?.invalid && recordForm.get('quantidade_entregas')?.touched" class="error-text">
+            Informe um número válido maior ou igual a zero.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="observacao">Observações (Opcional)</label>
+        <textarea
+          id="observacao"
+          formControlName="observacao"
+          rows="3"
+          placeholder="Ex: Turno da manhã, entregas urgentes, etc."
+        ></textarea>
+      </div>
+
+      <button type="submit" [disabled]="isSubmitting" class="btn-submit">
+        <span *ngIf="!isSubmitting">Salvar Registro</span>
+        <span *ngIf="isSubmitting">Salvando...</span>
+      </button>
+    </form>
+  </div>
+</div>

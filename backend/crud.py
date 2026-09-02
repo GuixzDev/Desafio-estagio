@@ -68,3 +68,4 @@ def get_summary(db: Session):
         media_entregas=media,
         por_departamento=por_departamento,
     )
+

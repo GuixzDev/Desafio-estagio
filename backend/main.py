@@ -54,3 +54,4 @@ def list_records(db: Session = Depends(get_db)):
 @app.get("/summary", response_model=schemas.SummaryResponse)
 def get_summary(db: Session = Depends(get_db)):
     return crud.get_summary(db)
+
